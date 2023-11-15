@@ -1,0 +1,106 @@
+//
+// person
+//
+Table person {
+  person_id int [primary key, increment]
+  age int
+  workclass_id int [ref: > workclass.id]
+  fnlwgt int
+  education int [ref: > education.id]
+  marital_status_id int [ref: > marital_status.id]
+  occupation_id int [ref: > occupation.id]
+  relationship_id int [ref: > relationship.id]
+  race_id int [ref: > race.id]
+  gender_id int [ref: > gender.id]
+  capital_gain int
+  capital_loss int
+  hours_per_week int
+  native_country_id int [ref: > native_country.id]
+  income int [ref: > income.id]
+}
+
+
+//
+// workclass
+//
+Table workclass {
+  id int [primary key, increment]
+  workclass varchar [not null]
+}
+
+
+//
+// education
+//
+Table education {
+  id int [primary key, increment]
+  education varchar [not null]
+  educational_num int [not null]
+
+  Indexes {
+    (education, educational_num) [unique, name: "idx__education__educational_num"]
+  }
+}
+
+
+//
+// marital_status
+//
+Table marital_status {
+  id int [primary key, increment]
+  marital_status varchar [not null]
+}
+
+
+//
+// occupation
+//
+Table occupation {
+  id int [primary key, increment]
+  occupation varchar [not null]
+}
+
+
+//
+// relationship
+//
+Table relationship {
+  id int [primary key, increment]
+  relationship varchar [not null]
+}
+
+
+//
+// race
+//
+Table race {
+  id int [primary key, increment]
+  race varchar [not null]
+}
+
+
+//
+// gender
+//
+Table gender {
+  id int [primary key, increment]
+  gender varchar [not null]
+}
+
+
+//
+// native_country
+//
+Table native_country {
+  id int [primary key, increment]
+  native_country varchar [not null]
+}
+
+
+//
+// income
+//
+Table income {
+  id int [primary key, increment]
+  income varchar [not null]
+}
