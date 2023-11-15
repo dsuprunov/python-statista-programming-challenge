@@ -1,2 +1,1 @@
-# python-statista-programming-challenge
-Statista Programming Challenge
+## Statista Programming Challenge
