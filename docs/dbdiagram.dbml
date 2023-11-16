@@ -6,17 +6,17 @@ Table person {
   age int
   workclass_id int [ref: > workclass.id]
   fnlwgt int
-  education int [ref: > education.id]
+  education_id int [ref: > education.id]
   marital_status_id int [ref: > marital_status.id]
   occupation_id int [ref: > occupation.id]
-  relationship_id int [ref: > relationship.id]
+  family_relationship_id int [ref: > family_relationship.id]
   race_id int [ref: > race.id]
   gender_id int [ref: > gender.id]
   capital_gain int
   capital_loss int
   hours_per_week int
-  native_country_id int [ref: > native_country.id]
-  income int [ref: > income.id]
+  native_country_id int [ref: > country.id]
+  income_id int [ref: > income.id]
 }
 
 
@@ -25,7 +25,7 @@ Table person {
 //
 Table workclass {
   id int [primary key, increment]
-  workclass varchar [not null]
+  workclass varchar [not null, unique]
 }
 
 
@@ -34,11 +34,11 @@ Table workclass {
 //
 Table education {
   id int [primary key, increment]
-  education varchar [not null]
-  educational_num int [not null]
+  education varchar [not null, unique]
+  educational_num int [not null, unique]
 
   Indexes {
-    (education, educational_num) [unique, name: "idx__education__educational_num"]
+    (education, educational_num) [unique]
   }
 }
 
@@ -48,7 +48,7 @@ Table education {
 //
 Table marital_status {
   id int [primary key, increment]
-  marital_status varchar [not null]
+  marital_status varchar [not null, unique]
 }
 
 
@@ -57,16 +57,16 @@ Table marital_status {
 //
 Table occupation {
   id int [primary key, increment]
-  occupation varchar [not null]
+  occupation varchar [not null, unique]
 }
 
 
 //
-// relationship
+// family_relationship
 //
-Table relationship {
+Table family_relationship {
   id int [primary key, increment]
-  relationship varchar [not null]
+  family_relationship varchar [not null, unique]
 }
 
 
@@ -75,7 +75,7 @@ Table relationship {
 //
 Table race {
   id int [primary key, increment]
-  race varchar [not null]
+  race varchar [not null, unique]
 }
 
 
@@ -84,16 +84,16 @@ Table race {
 //
 Table gender {
   id int [primary key, increment]
-  gender varchar [not null]
+  gender varchar [not null, unique]
 }
 
 
 //
-// native_country
+// country
 //
-Table native_country {
+Table country {
   id int [primary key, increment]
-  native_country varchar [not null]
+  country varchar [not null, unique]
 }
 
 
@@ -102,5 +102,5 @@ Table native_country {
 //
 Table income {
   id int [primary key, increment]
-  income varchar [not null]
+  income varchar [not null, unique]
 }
