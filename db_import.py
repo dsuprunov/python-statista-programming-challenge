@@ -9,7 +9,7 @@ import timeit
 from icecream import ic
 
 import config
-from models import Person
+from models import Unit
 from models import Country
 from models import Education
 from models import FamilyRelationship
@@ -85,7 +85,7 @@ def main():
                 """
 
                 # TODO: This piece of code needs to be reviewed and rewritten,
-                person = Person(
+                unit = Unit(
                     age=(
                         None if pd.isna(row['age'])
                         else int(row['age'])
@@ -139,7 +139,7 @@ def main():
                         else get_or_create(session, Income, income=row['income'])
                     ),
                 )
-                session.add(person)
+                session.add(unit)
                 session.commit()
 
         stop = timeit.default_timer()

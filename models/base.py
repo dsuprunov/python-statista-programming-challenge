@@ -7,12 +7,13 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 
+
 class Base(DeclarativeBase):
     pass
 
 
-class Person(Base):
-    __tablename__ = 'person'
+class Unit(Base):
+    __tablename__ = 'unit'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     age: Mapped[int | None]
@@ -49,25 +50,22 @@ class Person(Base):
     income: Mapped[Income | None] = relationship(back_populates='parents')
 
     def __str__(self) -> str:
-
-        return (
-            f'Person('
+        return (f'Unit('
                 f'{self.age!r}, '
                 f'{self.working_class!r}, '
                 f'{self.final_weight!r}, '
                 f'{self.education!r}, '
                 f'{self.marital_status!r}, '
-                f'{self.occupation!r}, ' 
+                f'{self.occupation!r}, '
                 f'{self.family_relationship!r}, '
-                f'{self.race!r}, ' 
+                f'{self.race!r}, '
                 f'{self.gender!r}, '
                 f'{self.capital_gain!r}, '
                 f'{self.capital_loss!r}, '
                 f'{self.hours_per_week!r}, '
                 f'{self.native_country!r}, '
                 f'{self.income!r}'
-            ')'
-        )
+                ')')
 
     def __repr__(self) -> str:
         return str(self)
@@ -79,7 +77,7 @@ class Country(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     country: Mapped[str] = mapped_column(unique=True)
 
-    parents: Mapped[list[Person]] = relationship(
+    parents: Mapped[list[Unit]] = relationship(
         back_populates='native_country',
         cascade='all, delete-orphan'
     )
@@ -101,7 +99,7 @@ class Education(Base):
     education: Mapped[str] = mapped_column(unique=True)
     years: Mapped[int] = mapped_column(unique=True)
 
-    parents: Mapped[list[Person]] = relationship(
+    parents: Mapped[list[Unit]] = relationship(
         back_populates='education',
         cascade='all, delete-orphan'
     )
@@ -119,7 +117,7 @@ class FamilyRelationship(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     family_relationship: Mapped[str] = mapped_column(unique=True)
 
-    parents: Mapped[list[Person]] = relationship(
+    parents: Mapped[list[Unit]] = relationship(
         back_populates='family_relationship',
         cascade='all, delete-orphan'
     )
@@ -137,7 +135,7 @@ class Gender(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     gender: Mapped[str] = mapped_column(unique=True)
 
-    parents: Mapped[list[Person]] = relationship(
+    parents: Mapped[list[Unit]] = relationship(
         back_populates='gender',
         cascade='all, delete-orphan'
     )
@@ -155,7 +153,7 @@ class Income(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     income: Mapped[str] = mapped_column(unique=True)
 
-    parents: Mapped[list[Person]] = relationship(
+    parents: Mapped[list[Unit]] = relationship(
         back_populates='income',
         cascade='all, delete-orphan'
     )
@@ -173,7 +171,7 @@ class MaritalStatus(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     marital_status: Mapped[str] = mapped_column(unique=True)
 
-    parents: Mapped[list[Person]] = relationship(
+    parents: Mapped[list[Unit]] = relationship(
         back_populates='marital_status',
         cascade='all, delete-orphan'
     )
@@ -191,7 +189,7 @@ class Occupation(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     occupation: Mapped[str] = mapped_column(unique=True)
 
-    parents: Mapped[list[Person]] = relationship(
+    parents: Mapped[list[Unit]] = relationship(
         back_populates='occupation',
         cascade='all, delete-orphan'
     )
@@ -209,7 +207,7 @@ class Race(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     race: Mapped[str] = mapped_column(unique=True)
 
-    parents: Mapped[list[Person]] = relationship(
+    parents: Mapped[list[Unit]] = relationship(
         back_populates='race',
         cascade='all, delete-orphan'
     )
@@ -227,13 +225,13 @@ class WorkingClass(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     working_class: Mapped[str] = mapped_column(unique=True)
 
-    parents: Mapped[list[Person]] = relationship(
+    parents: Mapped[list[Unit]] = relationship(
         back_populates='working_class',
         cascade='all, delete-orphan'
     )
 
     def __str__(self) -> str:
-        return f'Workingclass({self.id}, {self.working_class!r})'
+        return f'WorkingClass({self.id}, {self.working_class!r})'
 
     def __repr__(self) -> str:
         return str(self)
