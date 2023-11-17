@@ -1,28 +1,20 @@
 #!/usr/bin/env python
 
 import logging
-from sqlalchemy import create_engine
 
-import config
-from models import Base
+from core.helpers import DatabaseHelper
+from core.helpers import LoggingHelper
+from core.models import Base
 
 
 def main():
-    logging.basicConfig(
-        format='%(asctime)s %(levelname)s: %(message)s',
-        level=logging.INFO,
-        # level=logging.DEBUG,
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
+    LoggingHelper.set_logging_options()
 
-    logging.info(f'Creating new engine: create_engine(...)')
-    engine = create_engine(
-        url=config.SQLALCHEMY_URL,
-        echo=config.SQLALCHEMY_ECHO
-    )
+    logging.info(f'Starting DatabaseHelper')
+    db_helper = DatabaseHelper()
 
-    logging.info(f'Creating database and tables: Base.metadata.create_all(...)')
-    Base.metadata.create_all(bind=engine)
+    logging.info(f'Creating database and table(s)')
+    Base.metadata.create_all(bind=db_helper.engine)
 
     logging.info(f"All done")
 

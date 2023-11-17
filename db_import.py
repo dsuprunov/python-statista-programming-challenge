@@ -3,22 +3,23 @@
 import logging
 import pandas as pd
 import numpy as np
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
 import timeit
-from icecream import ic
+from sqlalchemy.orm import Session
+
+from core.helpers import DatabaseHelper
+from core.helpers import LoggingHelper
+from core.models import Unit
+from core.models import Country
+from core.models import Education
+from core.models import FamilyRelationship
+from core.models import Gender
+from core.models import Income
+from core.models import MaritalStatus
+from core.models import Occupation
+from core.models import Race
+from core.models import WorkingClass
 
 import config
-from models import Unit
-from models import Country
-from models import Education
-from models import FamilyRelationship
-from models import Gender
-from models import Income
-from models import MaritalStatus
-from models import Occupation
-from models import Race
-from models import WorkingClass
 
 
 def get_or_create(session, model, defaults=None, **kwargs):
@@ -38,13 +39,9 @@ def get_or_create(session, model, defaults=None, **kwargs):
         else:
             return instance
 
+
 def main():
-    logging.basicConfig(
-        format='%(asctime)s %(levelname)s: %(message)s',
-        level=logging.INFO,
-        # level=logging.DEBUG,
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
+    LoggingHelper.set_logging_options()
 
     try:
         logging.info(f'Loading {config.CSV_FILE}')
@@ -53,14 +50,11 @@ def main():
         df.replace('?', np.nan, inplace=True)
         logging.info(f'{len(df)} row(s) loaded')
 
-        logging.info(f'Creating new engine: create_engine(...)')
-        engine = create_engine(
-            url=config.SQLALCHEMY_URL,
-            echo=config.SQLALCHEMY_ECHO
-        )
+        logging.info(f'Starting DatabaseHelper')
+        db_helper = DatabaseHelper()
 
-        logging.info(f'Creating new session: session(...)')
-        with Session(engine) as session:
+        logging.info(f'Creating new session')
+        with Session(db_helper.engine) as session:
             start = timeit.default_timer()
             logging.info(f'Importing ...')
             for _, row in df.iterrows():
@@ -84,7 +78,7 @@ def main():
                  income                         <=50K
                 """
 
-                # TODO: This piece of code needs to be reviewed and rewritten,
+                # TODO: This piece of code needs to be reviewed and rewritten
                 unit = Unit(
                     age=(
                         None if pd.isna(row['age'])
