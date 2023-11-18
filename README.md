@@ -19,7 +19,7 @@
 
   - [As pdf](docs/dbdiagram.pdf)
   - [As interactive view](https://dbdiagram.io/d/655516d67d8bbd6465445e36)
-  - [As DML file](docs/database.dbml)
+  - [As DML file](docs/dbdiagram.dbml)
 
 - ### Database schema creation script:
 
