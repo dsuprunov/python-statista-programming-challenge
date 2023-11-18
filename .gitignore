@@ -5,3 +5,4 @@ __pycache__/
 .venv
 db.sqlite3
 census.db.sqlite3
+test.db.sqlite3

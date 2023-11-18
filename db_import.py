@@ -22,31 +22,13 @@ from core.models import WorkingClass
 import config
 
 
-def get_or_create(session, model, defaults=None, **kwargs):
-    instance = session.query(model).filter_by(**kwargs).one_or_none()
-    if instance:
-        return instance
-    else:
-        kwargs |= defaults or {}
-        instance = model(**kwargs)
-        try:
-            session.add(instance)
-            session.commit()
-        except Exception:
-            session.rollback()
-            instance = session.query(model).filter_by(**kwargs).one()
-            return instance
-        else:
-            return instance
-
-
 def main():
     LoggingHelper.set_logging_options()
 
     try:
         logging.info(f'Loading {config.CSV_FILE}')
         df = pd.read_csv(config.CSV_FILE)
-        # df = df.head(5)
+        df = df.head(5)
         df.replace('?', np.nan, inplace=True)
         logging.info(f'{len(df)} row(s) loaded')
 
@@ -86,34 +68,34 @@ def main():
                     ),
                     working_class=(
                         None if pd.isna(row['workclass'])
-                        else get_or_create(session, WorkingClass, working_class=row['workclass'])
+                        else db_helper.get_or_create(session, WorkingClass, working_class=row['workclass'])
                     ),
                     final_weight=(
                         None if pd.isna(row['fnlwgt'])
                         else int(row['fnlwgt'])),
                     # TODO: Warning! We are not checking fof NaN (but we should)
                     education=(
-                        get_or_create(session, Education, education=row['education'], years=row['educational-num'])
+                        db_helper.get_or_create(session, Education, education=row['education'], years=row['educational-num'])
                     ),
                     marital_status=(
                         None if pd.isna(row['marital-status'])
-                        else get_or_create(session, MaritalStatus, marital_status=row['marital-status'])
+                        else db_helper.get_or_create(session, MaritalStatus, marital_status=row['marital-status'])
                     ),
                     occupation=(
                         None if pd.isna(row['occupation'])
-                        else get_or_create(session, Occupation, occupation=row['occupation'])
+                        else db_helper.get_or_create(session, Occupation, occupation=row['occupation'])
                     ),
                     family_relationship=(
                         None if pd.isna(row['relationship'])
-                        else get_or_create(session, FamilyRelationship, family_relationship=row['relationship'])
+                        else db_helper.get_or_create(session, FamilyRelationship, family_relationship=row['relationship'])
                     ),
                     race=(
                         None if pd.isna(row['race'])
-                        else get_or_create(session, Race, race=row['race'])
+                        else db_helper.get_or_create(session, Race, race=row['race'])
                     ),
                     gender=(
                         None if pd.isna(row['gender'])
-                        else get_or_create(session, Gender, gender=row['gender'])
+                        else db_helper.get_or_create(session, Gender, gender=row['gender'])
                     ),
                     capital_gain=(
                         None if pd.isna(row['capital-gain'])
@@ -126,11 +108,11 @@ def main():
                         else int(row['hours-per-week'])),
                     native_country=(
                         None if pd.isna(row['native-country'])
-                        else get_or_create(session, Country, country=row['native-country'])
+                        else db_helper.get_or_create(session, Country, country=row['native-country'])
                     ),
                     income=(
                         None if pd.isna(row['income'])
-                        else get_or_create(session, Income, income=row['income'])
+                        else db_helper.get_or_create(session, Income, income=row['income'])
                     ),
                 )
                 session.add(unit)
