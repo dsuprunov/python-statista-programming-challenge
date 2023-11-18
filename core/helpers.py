@@ -29,12 +29,12 @@ class DatabaseHelper:
             else:
                 return instance
 
+
 class LoggingHelper:
     @staticmethod
     def set_logging_options():
         logging.basicConfig(
-            format='%(asctime)s %(levelname)s: %(message)s',
-            level=logging.INFO,
-            # level=logging.DEBUG,
-            datefmt='%Y-%m-%d %H:%M:%S'
+            format=config.LOGGING_FORMAT,
+            level=config.LOGGING_LEVEL,
+            datefmt=config.LOGGING_DATE_FORMAT,
         )
