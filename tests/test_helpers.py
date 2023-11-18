@@ -10,7 +10,7 @@ from core.helpers import DatabaseHelper
 from core.helpers import LoggingHelper
 
 
-def test_database_helper_test_get_or_create():
+def test_database_helper_get_or_create():
     #
     # create mock scheme
     #
@@ -41,7 +41,7 @@ def test_database_helper_test_get_or_create():
     assert True
 
 
-def test_logging_helper():
+def test_logging_helper_set_logging_options():
     LoggingHelper.set_logging_options()
 
     # logger = logging.getLogger(__name__)
