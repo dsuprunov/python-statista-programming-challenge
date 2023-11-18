@@ -2,9 +2,12 @@ version: '3'
 
 services:
   app:
-    build:
-      context: .
     image: statista-challenge:latest
     container_name: statista-challenge
+    ports:
+      - "8080:8080"
+    build: ./
+#    restart: always
     working_dir: /app
-    command: ["python", "main.py"]
+    command: python -m http.server 8080 --directory ./
+

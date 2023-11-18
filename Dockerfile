@@ -12,4 +12,6 @@ COPY main.py /app/
 #RUN coverage run -m pytest
 #RUN coverage report
 
+EXPOSE 8080
+
 CMD ["python", "main.py"]
