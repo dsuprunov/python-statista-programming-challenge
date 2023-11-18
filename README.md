@@ -36,7 +36,7 @@
 ## Task 2: Data insights
 
 - ### [Jupyter Notebook](docs/task_20.ipnb)
-- ### [JSON with questions and answers](docs/task_20.ipnb)
+- ### [JSON with questions and answers](docs/task_24.json)
 
 ## Task 3: Web Application
 
