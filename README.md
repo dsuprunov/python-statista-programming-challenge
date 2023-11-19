@@ -114,7 +114,7 @@ The values in it will be automatically imported and used inside the containers.
 ### Typical workflow
 1. Download [statista-challenge-app.sh](statista-challenge-app.sh) if it has not been downloaded yet.
    ```bash
-   wget https://github.com/dsuprunov/python-statista-programming-challenge/blob/main/statista-challenge-app.sh
+   wget https://raw.githubusercontent.com/dsuprunov/python-statista-programming-challenge/main/statista-challenge-app.sh
    ```
    And make it executable
    ```bash
