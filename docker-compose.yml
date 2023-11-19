@@ -1,29 +1,23 @@
 version: '3'
 
 networks:
-  statista-challenge:
+  statista-challenge-network:
 
 services:
   postgres:
     image: postgres:latest
     container_name: statista-challenge-postgres
     networks:
-      - statista-challenge
+      - statista-challenge-network
     env_file:
       - .env
     restart: always
-#    volumes:
-#      - type: bind
-#        source: ./db_init.sh
-#        target: /docker-entrypoint-initdb.d/db_init.sh
-#        read_only: true
-
 
   app:
     image: statista-challenge:latest
     container_name: statista-challenge-app
     networks:
-      - statista-challenge
+      - statista-challenge-network
     env_file:
       - .env
     depends_on:

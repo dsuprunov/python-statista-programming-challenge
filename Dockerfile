@@ -6,11 +6,10 @@ COPY requirements.txt /app/
 RUN python -m pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-#COPY . /app
-COPY main.py /app/
+COPY . /app
 
-#RUN coverage run -m pytest
-#RUN coverage report
+RUN coverage run -m pytest
+RUN coverage report
 
 EXPOSE 8080
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 import logging
 import pandas as pd
 import numpy as np
@@ -22,17 +23,25 @@ from core.models import WorkingClass
 import config
 
 
-def main():
-    LoggingHelper.set_logging_options()
+def main(num_rows_to_import: int | None = None):
+    """
+    Load data from CSV file into the database
+
+    :param num_rows_to_import: how many rows should be loaded (None = all rows)
+    :type num_rows_to_import: int | None
+    """
 
     try:
+        LoggingHelper.set_logging_options()
+
         logging.info(f'Loading {config.CSV_FILE}')
         df = pd.read_csv(config.CSV_FILE)
-        df = df.head(5)
+        if num_rows_to_import is not None:
+            df = df.head(num_rows_to_import)
         df.replace('?', np.nan, inplace=True)
         logging.info(f'{len(df)} row(s) loaded')
 
-        logging.info(f'Starting DatabaseHelper')
+        logging.info(f'Connecting to {config.SQLALCHEMY_URL}')
         db_helper = DatabaseHelper()
 
         logging.info(f'Creating new session')
@@ -127,4 +136,22 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    """
+        Usage: ./db_import.py [limit]
+        
+            Specify the number of rows to be imported with the optional 'limit' parameter.
+            
+            If no 'limit' is specified, all rows will be imported.
+        
+        Example:
+            ./db_import.py          # Import all rows
+            ./db_import.py 100      # Import the first 100 rows 
+    """
+
+    limit = None
+    try:
+        limit = int(sys.argv[1])
+    except:
+        pass
+
+    main(limit)
