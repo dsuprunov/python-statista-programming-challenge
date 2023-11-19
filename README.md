@@ -8,7 +8,6 @@
 
 - Bonus task
 - Task #3
-- Task 5 Include appropriate documentation in a readme.md
 
 ## Table of Contents
 
@@ -18,6 +17,10 @@
 - [Task 4: Making our app distribution ready](#task-4-making-our-app-distribution-ready)
 - [Task 5: Updating, testing, and documenting](#task-5-updating-testing-and-documenting)
 - [Bonus task](#bonus-task)
+
+If you are a Data Engineer or a DevOps Engineer, you can proceed directly
+to the [Task 5: Updating, testing, and documenting](#task-5-updating-testing-and-documenting) to review the instructions
+for launching the application and fulfilling all the infrastructure requirements.
 
 ---
 
@@ -80,10 +83,70 @@
 
 ## Task 5: Updating, testing, and documenting
 
+### Comments
+
+The entire process is built around the `./data/Input_Dataset.csv` file. Under normal circumstances,
+it is a part of the `statista-challenge-app:latest` image. If you want to work with your own dataset,
+ensuring it follows the same format and structure, you have two options:
+
+1. Replace `./data/Input_Dataset.csv` with your file of and rebuild the Docker image. \
+   You will need to restart the docker-compose service named `statista-challenge-app`.
+2. Alternatively, you can mount `./data/` into your container. \
+   Please uncomment the relevant code in `docker-compose.yml`. \
+   ```yaml
+   #    volumes:
+   #      - ./data/:/app/data
+   ```
+   But, once again, you will need to restart the docker-compose service `statista-challenge-app`.
+ 
+By default (without environmental parameters), a local (inside of `statista-challenge-app` container)
+SQLite database `/app/data/census.db.sqlite3` will be created from a local (again inside of `statista-challenge-app`
+container) CSV file `/app/data/Input_Dataset.csv`.
+<br/>
+<br/>
+If you prefer to use your own PostgreSQL server, please check the `.env file.`
+The values in it will be automatically imported and used inside the containers. 
+
+### Typical workflow
+1. Download [statista-challenge-app.sh](statista-challenge-app.sh) if it has not been downloaded yet.
+   ```bash
+   wget https://github.com/dsuprunov/python-statista-programming-challenge/blob/main/statista-challenge-app.sh
+   ```
+2. Pull the latest code from GitHub repo
+   ```bash
+   ./statista-challenge-app.sh pull
+   ```
+3. Build an image
+   ```bash
+   ./statista-challenge-app.sh build
+   ```
+4. Start the services
+   ```bash
+   ./statista-challenge-app.sh start
+   ```
+5. Test database connection and import script
+   ```bash
+   ./statista-challenge-app.sh test
+   ```
+6. Import data from CSV file
+   ```bash
+   ./statista-challenge-app.sh init
+   ```
+7. Do something...
+   ```
+   # For example, work with data or the database.
+   ```
+8. 6top services (if you do not need them)
+   ```bash
+   ./statista-challenge-app.sh stop
+   ```
+   
+### General usage
 ```bash
-./statista-challenge-app.sh {start|init|help|stop|restart|build|test}
+./statista-challenge-app.sh {pull|start|init|help|stop|restart|build|test}
 ```
 Commands:
+- **pull**     - Pull the latest code from a GitHub repository
 -  **start**   - Create and starts the containers in the background and leaves them running
 -  **init**    - Populates own/containerized PostgreSQL database with data from CSV file
 -  **help**    - Displays this help message
