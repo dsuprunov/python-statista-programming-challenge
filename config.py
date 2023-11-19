@@ -13,14 +13,8 @@ from sqlalchemy.engine import URL
 # - SQLite database settings: SQLITE_DB_FILE
 # - Input file settings: INPUT_CSV_FILE
 #
-DEFAULT_SQLITE_DB_FILE = './census.db.sqlite3'
-DEFAULT_INPUT_CSV_FILE = './Input_Dataset.csv'
-
-#
-# Something for tests
-#
-# DEFAULT_SQLITE_DB_FILE = './test.db.sqlite3'
-# load_dotenv()
+DEFAULT_SQLITE_DB_FILE = './data/census.db.sqlite3'
+DEFAULT_INPUT_CSV_FILE = './data/Input_Dataset.csv'
 
 #
 # SQLAlchemy
@@ -28,12 +22,12 @@ DEFAULT_INPUT_CSV_FILE = './Input_Dataset.csv'
 SQLALCHEMY_URL = ''
 SQLALCHEMY_ECHO = False
 
-if all(e in os.environ for e in ['POSTGRES_DB', 'POSTGRES_USER', 'POSTGRES_PASSWORD']):
+if all(e in os.environ for e in ['POSTGRES_HOST', 'POSTGRES_DB', 'POSTGRES_USER', 'POSTGRES_PASSWORD']):
     SQLALCHEMY_URL = URL.create(
         drivername='postgresql',
         username=os.environ['POSTGRES_USER'],
         password=os.environ['POSTGRES_PASSWORD'],
-        host='localhost',
+        host=os.environ['POSTGRES_HOST'],
         port='5432',
         database=os.environ['POSTGRES_DB'],
     )

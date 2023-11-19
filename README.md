@@ -8,7 +8,8 @@
 
 - Bonus task
 - Task #3
-- Task #5 (we need more documentation)
+- Task 5 Add unit tests to test the upload scripts and connection to the SQLite and/or Postgres database 
+- Task 5 Include appropriate documentation in a readme.md
 
 ## Table of Contents
 
@@ -16,7 +17,7 @@
 - [Task 2: Data insights](#task-2-data-insights)
 - [Task 3: Web Application](#task-3-web-application)
 - [Task 4: Making our app distribution ready](#task-4-making-our-app-distribution-ready)
-- [Task 5: Updating, testing, and documenting](#task-5-updating,-testing,-and-documenting)
+- [Task 5: Updating, testing, and documenting](#task-5-updating-testing-and-documenting)
 - [Bonus task](#bonus-task)
 
 ---
@@ -31,12 +32,12 @@
   ```bash
   pip install -r requirements.txt
   ```
-  By default (without environmental parameters), a local SQLite database `census.db.sqlite3` will be created
-  from a local CSV file `./Input_Dataset.csv`.
+  By default (without environmental parameters), a local SQLite database `./data/census.db.sqlite3` will be created
+  from a local CSV file `./data/Input_Dataset.csv`.
   <br/>
   <br/>
   If you prefer to use PostgreSQL and/or change the location of the input CSV file, please check the
-  `.env` file, and remember to import it into the current environment before running the script.  
+  `.env` file, and remember to import it into the current environment before running the script(s).  
   <br/>
   In case you decided to use PostgreSQL, please create both the user and the database.
   <br/>  
@@ -78,11 +79,15 @@
 
 ## Task 5: Updating, testing, and documenting
 
-- Create a bash script which we can use to 
-  pull code from a repository, 
-  rebuild our application, 
-  and run the docker compose file in the repository
-- Add unit tests to test the upload scripts and connection to the SQLite and/or Postgres database 
-- Include appropriate documentation in a readme.md
+Usage
+```bash
+./statista-challenge-app.sh {start|init|help|stop|restart}
+```
+Commands:
+- **start**: Starts the containers in the background and leaves them running.
+- **init**: Populates own/containerized PostgreSQL database with data from a CSV file.
+- **help**: Displays this help message.
+- **stop**: Stops running containers without removing them.
+- **restart**: Restarts all stopped and running services.
 
 ## Bonus task
