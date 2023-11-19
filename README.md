@@ -3,6 +3,14 @@
 [![tests](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/tests.yml/badge.svg)](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/tests.yml)
 [![docker build](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/docker.yml/badge.svg)](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/docker.yml)
 
+
+## ToDo
+- 
+- make an eazy switch between SQLite and Postgres \
+  (probably ENV based, if we have no env settings - use defaults from the config, otherwise use ENV settings)  
+
+
+
 ## Table of Contents
 
 - [Task 1: Ingesting the data into a database](#task-1-ingesting-the-data-into-a-database)
@@ -24,13 +32,13 @@
 - ### Database schema creation script:
 
     ```console
-    ~/db_create.py
+    ./db_create.py
     ```
 
 - ### Database data import:
 
     ```console
-    ~/db_import.py
+    ./db_import.py
     ```
 
 ## Task 2: Data insights
@@ -41,6 +49,9 @@
 ## Task 3: Web Application
 
 ## Task 4: Making our app distribution ready
+
+- ### [Dockerfile](Dockerfile)
+- ### [Docker compose file](docker-compose.yml)
 
 ## Task 5: Updating, testing, and documenting
 - docker-compose up --detach
