@@ -112,13 +112,14 @@ If you prefer to use your own PostgreSQL server, please check the `.env file.`
 The values in it will be automatically imported and used inside the containers. 
 
 ### Typical workflow
-1. Download [statista-challenge-app.sh](statista-challenge-app.sh) if it has not been downloaded yet.
+1. **This step is necessary only if you have not downloaded and run this project before.** \
+  Download [statista-challenge-app.sh](statista-challenge-app.sh) if it has not been downloaded yet.   
    ```bash
    wget https://raw.githubusercontent.com/dsuprunov/python-statista-programming-challenge/main/statista-challenge-app.sh
-   ```
-   And make it executable
-   ```bash
-   chmod 755 statista-challenge-app.sh 
+   chmod 755 statista-challenge-app.sh
+   ./statista-challenge-app.sh pull 
+   rm statista-challenge-app.sh
+   cd python-statista-programming-challenge
    ```
 2. Pull the latest code from GitHub repo
    ```bash
