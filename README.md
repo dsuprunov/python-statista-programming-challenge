@@ -84,12 +84,12 @@
 ./statista-challenge-app.sh {start|init|help|stop|restart|build|test}
 ```
 Commands:
--  **start**   - Starts the containers in the background and leaves them running
+-  **start**   - Create and starts the containers in the background and leaves them running
 -  **init**    - Populates own/containerized PostgreSQL database with data from CSV file
 -  **help**    - Displays this help message
 -  **stop**    - Stops running containers without removing them
--  **restart** - Restarts all stopped and running service
--  **build**   - Builds the local docker container(s)
+-  **restart** - Restarts all stopped and running containers
+-  **build**   - Build or rebuild services
 -  **test**    - Tests the connection to the production database and uploads scripts
 
 ## Bonus task
