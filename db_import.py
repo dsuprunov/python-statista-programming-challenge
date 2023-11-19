@@ -5,6 +5,7 @@ import logging
 import pandas as pd
 import numpy as np
 import timeit
+from sqlalchemy import Engine
 from sqlalchemy.orm import Session
 
 from core.helpers import DatabaseHelper
@@ -23,17 +24,8 @@ from core.models import WorkingClass
 import config
 
 
-def main(num_rows_to_import: int | None = None):
-    """
-    Load data from CSV file into the database
-
-    :param num_rows_to_import: how many rows should be loaded (None = all rows)
-    :type num_rows_to_import: int | None
-    """
-
+def db_import(engine: Engine, num_rows_to_import: int | None = None):
     try:
-        LoggingHelper.set_logging_options()
-
         logging.info(f'Loading {config.CSV_FILE}')
         df = pd.read_csv(config.CSV_FILE)
         if num_rows_to_import is not None:
@@ -41,11 +33,8 @@ def main(num_rows_to_import: int | None = None):
         df.replace('?', np.nan, inplace=True)
         logging.info(f'{len(df)} row(s) loaded')
 
-        logging.info(f'Connecting to {config.SQLALCHEMY_URL}')
-        db_helper = DatabaseHelper()
-
         logging.info(f'Creating new session')
-        with Session(db_helper.engine) as session:
+        with Session(engine) as session:
             start = timeit.default_timer()
             logging.info(f'Importing ...')
             for _, row in df.iterrows():
@@ -77,34 +66,34 @@ def main(num_rows_to_import: int | None = None):
                     ),
                     working_class=(
                         None if pd.isna(row['workclass'])
-                        else db_helper.get_or_create(session, WorkingClass, working_class=row['workclass'])
+                        else DatabaseHelper.get_or_create(session, WorkingClass, working_class=row['workclass'])
                     ),
                     final_weight=(
                         None if pd.isna(row['fnlwgt'])
                         else int(row['fnlwgt'])),
                     # TODO: Warning! We are not checking fof NaN (but we should)
                     education=(
-                        db_helper.get_or_create(session, Education, education=row['education'], years=row['educational-num'])
+                        DatabaseHelper.get_or_create(session, Education, education=row['education'], years=row['educational-num'])
                     ),
                     marital_status=(
                         None if pd.isna(row['marital-status'])
-                        else db_helper.get_or_create(session, MaritalStatus, marital_status=row['marital-status'])
+                        else DatabaseHelper.get_or_create(session, MaritalStatus, marital_status=row['marital-status'])
                     ),
                     occupation=(
                         None if pd.isna(row['occupation'])
-                        else db_helper.get_or_create(session, Occupation, occupation=row['occupation'])
+                        else DatabaseHelper.get_or_create(session, Occupation, occupation=row['occupation'])
                     ),
                     family_relationship=(
                         None if pd.isna(row['relationship'])
-                        else db_helper.get_or_create(session, FamilyRelationship, family_relationship=row['relationship'])
+                        else DatabaseHelper.get_or_create(session, FamilyRelationship, family_relationship=row['relationship'])
                     ),
                     race=(
                         None if pd.isna(row['race'])
-                        else db_helper.get_or_create(session, Race, race=row['race'])
+                        else DatabaseHelper.get_or_create(session, Race, race=row['race'])
                     ),
                     gender=(
                         None if pd.isna(row['gender'])
-                        else db_helper.get_or_create(session, Gender, gender=row['gender'])
+                        else DatabaseHelper.get_or_create(session, Gender, gender=row['gender'])
                     ),
                     capital_gain=(
                         None if pd.isna(row['capital-gain'])
@@ -117,36 +106,25 @@ def main(num_rows_to_import: int | None = None):
                         else int(row['hours-per-week'])),
                     native_country=(
                         None if pd.isna(row['native-country'])
-                        else db_helper.get_or_create(session, Country, country=row['native-country'])
+                        else DatabaseHelper.get_or_create(session, Country, country=row['native-country'])
                     ),
                     income=(
                         None if pd.isna(row['income'])
-                        else db_helper.get_or_create(session, Income, income=row['income'])
+                        else DatabaseHelper.get_or_create(session, Income, income=row['income'])
                     ),
                 )
                 session.add(unit)
                 session.commit()
 
         stop = timeit.default_timer()
-
         logging.info(f'Imported {len(df)} row(s) in {stop - start} second(s)')
-        logging.info(f'All done')
+
     except Exception as e:
         logging.error(e)
 
 
 if __name__ == '__main__':
-    """
-        Usage: ./db_import.py [limit]
-        
-            Specify the number of rows to be imported with the optional 'limit' parameter.
-            
-            If no 'limit' is specified, all rows will be imported.
-        
-        Example:
-            ./db_import.py          # Import all rows
-            ./db_import.py 100      # Import the first 100 rows 
-    """
+    LoggingHelper.set_logging_options()
 
     limit = None
     try:
@@ -154,4 +132,9 @@ if __name__ == '__main__':
     except:
         pass
 
-    main(limit)
+    logging.info(f'Connecting to {config.SQLALCHEMY_URL}')
+    db_helper = DatabaseHelper()
+
+    db_import(db_helper.engine, limit)
+
+    logging.info(f'All done')

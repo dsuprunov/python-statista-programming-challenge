@@ -10,8 +10,8 @@ case "$1" in
     echo "  help    - Displays this help message"
     echo "  stop    - Stops running containers without removing them"
     echo "  restart - Restarts all stopped and running service"
-    echo "  build   - Builds the local docker container(s)."
-    echo "  test    - Tests the upload scripts and connection to the database"
+    echo "  build   - Builds the local docker container(s)"
+    echo "  test    - Tests the connection to the production database and uploads scripts"
     echo ""
     ;;
 
@@ -22,7 +22,7 @@ case "$1" in
 
   "init")
     echo "Populating the containerized PostgreSQL database with data from a CSV file..."
-    docker exec -ti $(docker ps -a -q --filter="ancestor=statista-challenge-app" --filter="status=running") /app/db_create_import.sh 100
+    docker exec -ti $(docker ps -a -q --filter="ancestor=statista-challenge-app" --filter="status=running") /app/db_create_import.sh
     ;;
 
   "restart")
@@ -41,8 +41,8 @@ case "$1" in
     ;;
 
   "test")
-    echo "Testing..."
-#    docker-compose build
+    echo "Testing the connection to the production database and uploads scripts..."
+    docker exec -ti $(docker ps -a -q --filter="ancestor=statista-challenge-app" --filter="status=running") /app/db_test.py
     ;;
   *)
     echo ""

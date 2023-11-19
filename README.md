@@ -8,7 +8,6 @@
 
 - Bonus task
 - Task #3
-- Task 5 Add unit tests to test the upload scripts and connection to the SQLite and/or Postgres database 
 - Task 5 Include appropriate documentation in a readme.md
 
 ## Table of Contents
@@ -24,12 +23,14 @@
 
 ## Task 1: Ingesting the data into a database
 
-- ### Preparation for the Next Two Steps
+- ### Preparation for the next two steps
 
-  For the next two steps (which are performed on your local Linux PC), you need to pre-install
-  all the packages listed in the `requirements.txt` file.
+  For the next two steps, performed on your local Linux PC, create a
+  virtual environment, activate it, and pre-install all packages listed in the `requirements.txt` file.
   
   ```bash
+  python -m venv .venv
+  source .venv/bin/activate
   pip install -r requirements.txt
   ```
   By default (without environmental parameters), a local SQLite database `./data/census.db.sqlite3` will be created
@@ -88,7 +89,7 @@ Commands:
 -  **help**    - Displays this help message
 -  **stop**    - Stops running containers without removing them
 -  **restart** - Restarts all stopped and running service
--  **build**   - Builds the local docker container(s).
--  **test**    - Tests the upload scripts and connection to the database
+-  **build**   - Builds the local docker container(s)
+-  **test**    - Tests the connection to the production database and uploads scripts
 
 ## Bonus task
