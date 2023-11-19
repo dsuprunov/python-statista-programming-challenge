@@ -1,7 +1,5 @@
 #!/bin/bash
 
-PROJECT_NAME="python-statista-programming-challenge"
-
 GITHUB_REPO_URL="https://github.com/dsuprunov/python-statista-programming-challenge.git"
 
 case "$1" in
@@ -59,17 +57,11 @@ case "$1" in
       exit 1
     fi
 
-    # create project folder if not exists
-    if [ ! -d "$PROJECT_NAME" ]; then
-      mkdir -p "$PROJECT_NAME"
-    fi
-
     # clone or pull
-    if [ -d "$PROJECT_NAME/.git" ]; then
-      cd "$PROJECT_NAME" || exit
+    if [ -d "./.git" ]; then
       git pull
     else
-      git clone "$GITHUB_REPO_URL" "$PROJECT_NAME"
+      git clone "$GITHUB_REPO_URL"
     fi
     ;;
   *)

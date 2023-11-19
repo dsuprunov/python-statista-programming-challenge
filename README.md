@@ -89,10 +89,14 @@ The entire process is built around the `./data/Input_Dataset.csv` file. Under no
 it is a part of the `statista-challenge-app:latest` image. If you want to work with your own dataset,
 ensuring it follows the same format and structure, you have two options:
 
-1. Replace `./data/Input_Dataset.csv` with your file of and rebuild the Docker image. \
+1. Replace `./data/Input_Dataset.csv` with your file and rebuild the Docker image. \
    You will need to restart the docker-compose service named `statista-challenge-app`.
 2. Alternatively, you can mount `./data/` into your container. \
-   Please uncomment the relevant code in `docker-compose.yml`. \
+   This will allow you to change the content of the `./data/Input_Dataset.csv` without
+   the need to rebuild and restart the service.
+   <br/>
+   <br/>
+   Please uncomment the relevant code in `docker-compose.yml`
    ```yaml
    #    volumes:
    #      - ./data/:/app/data
@@ -111,6 +115,10 @@ The values in it will be automatically imported and used inside the containers.
 1. Download [statista-challenge-app.sh](statista-challenge-app.sh) if it has not been downloaded yet.
    ```bash
    wget https://github.com/dsuprunov/python-statista-programming-challenge/blob/main/statista-challenge-app.sh
+   ```
+   And make it executable
+   ```bash
+   chmod 755 statista-challenge-app.sh 
    ```
 2. Pull the latest code from GitHub repo
    ```bash
