@@ -1,14 +1,14 @@
 version: '3'
 
-networks:
-  statista-challenge-network:
+#networks:
+#  statista-challenge-network:
 
 services:
   postgres:
     image: postgres:latest
     container_name: statista-challenge-postgres
-    networks:
-      - statista-challenge-network
+#    networks:
+#      - statista-challenge-network
     env_file:
       - .env
     restart: always
@@ -16,10 +16,10 @@ services:
 #      - "5432:5432"
 
   app:
-    image: statista-challenge:latest
+    image: statista-challenge-app:latest
     container_name: statista-challenge-app
-    networks:
-      - statista-challenge-network
+#    networks:
+#      - statista-challenge-network
     env_file:
       - .env
     depends_on:

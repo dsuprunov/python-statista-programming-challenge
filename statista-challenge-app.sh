@@ -1,5 +1,3 @@
-#!/usr/bin/bash
-
 #!/bin/bash
 
 case "$1" in
@@ -13,18 +11,18 @@ case "$1" in
     echo "  stop    - Stops running containers without removing them"
     echo "  restart - Restarts all stopped and running service"
     echo "  build   - Builds the local docker container(s)."
-    exho "  test    - Tests the upload scripts and connection to the database"
+    echo "  test    - Tests the upload scripts and connection to the database"
     echo ""
     ;;
 
   "start")
     echo "Starting containers in the background and leaving them running..."
-    docker-compose up -d
+    docker-compose up -d --remove-orphans
     ;;
 
   "init")
     echo "Populating the containerized PostgreSQL database with data from a CSV file..."
-    # Вставьте здесь команды для инициализации
+    docker exec -ti $(docker ps -a -q --filter="ancestor=statista-challenge-app" --filter="status=running") /app/db_create_import.sh 100
     ;;
 
   "restart")

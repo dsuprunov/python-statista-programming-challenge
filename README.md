@@ -79,15 +79,16 @@
 
 ## Task 5: Updating, testing, and documenting
 
-Usage
 ```bash
-./statista-challenge-app.sh {start|init|help|stop|restart}
+./statista-challenge-app.sh {start|init|help|stop|restart|build|test}
 ```
 Commands:
-- **start**: Starts the containers in the background and leaves them running.
-- **init**: Populates own/containerized PostgreSQL database with data from a CSV file.
-- **help**: Displays this help message.
-- **stop**: Stops running containers without removing them.
-- **restart**: Restarts all stopped and running services.
+-  **start**   - Starts the containers in the background and leaves them running
+-  **init**    - Populates own/containerized PostgreSQL database with data from CSV file
+-  **help**    - Displays this help message
+-  **stop**    - Stops running containers without removing them
+-  **restart** - Restarts all stopped and running service
+-  **build**   - Builds the local docker container(s).
+-  **test**    - Tests the upload scripts and connection to the database
 
 ## Bonus task
