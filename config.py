@@ -13,8 +13,8 @@ from sqlalchemy.engine import URL
 # - SQLite database settings: SQLITE_DB_FILE
 # - Input file settings: INPUT_CSV_FILE
 #
-DEFAULT_SQLITE_DB_FILE = './data/census.db.sqlite3'
 DEFAULT_INPUT_CSV_FILE = './data/Input_Dataset.csv'
+DEFAULT_SQLITE_DB_FILE = './instance/census.db.sqlite3'
 
 #
 # SQLAlchemy

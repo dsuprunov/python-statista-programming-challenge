@@ -36,7 +36,7 @@ for launching the application and fulfilling all the infrastructure requirements
   source .venv/bin/activate
   pip install -r requirements.txt
   ```
-  By default (without environmental parameters), a local SQLite database `./data/census.db.sqlite3` will be created
+  By default (without environmental parameters), a local SQLite database `./instance/census.db.sqlite3` will be created
   from a local CSV file `./data/Input_Dataset.csv`.
   <br/>
   <br/>
@@ -105,7 +105,7 @@ ensuring it follows the same format and structure, you have two options:
    But, once again, you will need to restart the docker-compose service `statista-challenge-app`.
  
 By default (without environmental parameters), a local (inside of `statista-challenge-app` container)
-SQLite database `/app/data/census.db.sqlite3` will be created from a local (again inside of `statista-challenge-app`
+SQLite database `/app/instance/census.db.sqlite3` will be created from a local (again inside of `statista-challenge-app`
 container) CSV file `/app/data/Input_Dataset.csv`.
 <br/>
 <br/>

@@ -7,4 +7,4 @@
 #
 docs/
 statista-challenge-app.sh
-data/census.db.sqlite3
+instance/census.db.sqlite3
