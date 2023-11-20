@@ -1,0 +1,88 @@
+<h2>Inspect Tables</h2>
+
+<div class="form-group">
+    <label for="tableDropdown">Select Table:</label>
+    <select class="form-control" id="tableDropdown" onchange="loadTableData()">
+        {% for table in data.tables %}
+            <option value="{{ table }}">{{ table }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="mt-3">
+    <label>Show:</label>
+    <div class="form-check form-check-inline" id="columnCheckboxes">
+        <!-- Checkboxes will be added dynamically using JavaScript -->
+    </div>
+</div>
+
+<div class="mt-3">
+    <table class="table">
+        <thead>
+            <tr id="tableHeaders">
+                <!-- Column headers will be added dynamically using JavaScript -->
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Table rows will be added dynamically using JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function loadTableData() {
+        var selectedTable = $('#tableDropdown').val();
+
+        $.get(`/table/${selectedTable}`, function (data) {
+            populateInspectTab(data)
+        });
+    }
+
+    function populateInspectTab(data) {
+        var columnCheckboxes = $('#columnCheckboxes');
+        $('#columnCheckboxes').empty();
+        $.each(data[0], function(key) {
+            columnCheckboxes.append(
+                '<div class="form-check form-check-inline">' +
+                    '<input class="form-check-input" type="checkbox" id="' + key + 'Checkbox" checked onchange="toggleColumn(\'' + key + '\')">' +
+                    '<label class="form-check-label" for="' + key + 'Checkbox">' + key + '</label>' +
+                '</div>');
+        });
+
+        var tableHeaders = $('#tableHeaders');
+        $('#tableHeaders').empty();
+        $.each(data[0], function(key) {
+            tableHeaders.append('<th>' + key + '</th>');
+        });
+
+        var tableBody = $('#tableBody');
+        $('#tableBody').empty();
+        $.each(data, function(index, row) {
+            var rowHtml = '<tr>';
+            $.each(row, function(key, value) {
+                rowHtml += '<td data-column="' + key + '">' + value + '</td>';
+            });
+            rowHtml += '</tr>';
+            tableBody.append(rowHtml);
+        });
+    }
+
+    function toggleColumn(column) {
+        var columnIndex = $('#tableHeaders th:contains(' + column + ')').index();
+
+        if ($('#' + column + 'Checkbox').prop('checked')) {
+            // Show the column
+            $('#tableHeaders th:eq(' + columnIndex + ')').show();
+            $('#tableBody td[data-column="' + column + '"]').show();
+        } else {
+            // Hide the column
+            $('#tableHeaders th:eq(' + columnIndex + ')').hide();
+            $('#tableBody td[data-column="' + column + '"]').hide();
+        }
+    }
+
+    $(document).ready(function() {
+        loadTableData();
+    });
+</script>
+

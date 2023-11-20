@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <title>Census</title>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="inspect-tab" data-toggle="tab" href="#inspect">Inspect Tables</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="visualize-tab" data-toggle="tab" href="#visualize">Visualize Data</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="export-tab" data-toggle="tab" href="#export">Export Data</a>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-2">
+            <div class="tab-pane fade show active" id="inspect">
+                {% block inspect_tab %}{% endblock %}
+            </div>
+            <div class="tab-pane fade" id="visualize">
+                {% block visualize_tab %}{% endblock %}
+            </div>
+            <div class="tab-pane fade" id="export">
+                {% block export_tab %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
