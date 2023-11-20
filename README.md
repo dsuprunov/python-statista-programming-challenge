@@ -121,11 +121,11 @@ The values in it will be automatically imported and used inside the containers.
    rm statista-challenge-app.sh
    cd python-statista-programming-challenge
    ```
-   The another option is to simple clone GitHub repo. \
-   You need to have git client installed before.
+   The other option is to simply clone the GitHub repository. \
+   You need to have the Git client installed.
    ```bash
    git clone https://github.com/dsuprunov/python-statista-programming-challenge.git
-   cd cd python-statista-programming-challenge
+   cd python-statista-programming-challenge
    ```
 2. Pull the latest code from GitHub repo
    ```bash
@@ -151,7 +151,7 @@ The values in it will be automatically imported and used inside the containers.
    ```
    # For example, work with data or the database.
    ```
-8. 6top services (if you do not need them)
+8. Stop services (if you do not need them)
    ```bash
    ./statista-challenge-app.sh stop
    ```
