@@ -41,7 +41,7 @@ for launching the application and fulfilling all the infrastructure requirements
   <br/>
   <br/>
   If you prefer to use PostgreSQL and/or change the location of the input CSV file, please check the
-  `.env` file, and remember to import it into the current environment before running the script(s).  
+  `.docker.env` file, and remember to import it into the current environment before running the script(s).  
   <br/>
   In case you decided to use PostgreSQL, please create both the user and the database.
   <br/>  
@@ -109,7 +109,7 @@ SQLite database `/app/instance/census.db.sqlite3` will be created from a local (
 container) CSV file `/app/data/Input_Dataset.csv`.
 <br/>
 <br/>
-If you prefer to use your own PostgreSQL server, please check the `.env file.`
+If you prefer to use your own PostgreSQL server, please check the `.docker.env` file.
 The values in it will be automatically imported and used inside the containers. 
 
 ### Typical workflow

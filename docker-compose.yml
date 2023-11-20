@@ -10,7 +10,7 @@ services:
     networks:
       - statista-challenge-network
     env_file:
-      - .env
+      - .docker.env
     restart: always
 #    ports:
 #      - "5432:5432"
@@ -21,7 +21,7 @@ services:
     networks:
       - statista-challenge-network
     env_file:
-      - .env
+      - .docker.env
     depends_on:
       - postgres
     restart: always
@@ -31,4 +31,3 @@ services:
 #      - ./data/:/app/data
     build: ./
     working_dir: /app
-    command: python -m http.server 8080 --directory ./
