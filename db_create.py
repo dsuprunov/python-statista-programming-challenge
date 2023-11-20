@@ -15,7 +15,7 @@ import config
 def db_create(engine: Engine):
 
     sql_create_view = '''
-        CREATE VIEW census_data_as_csv AS
+        CREATE VIEW view_census_data_as_csv AS
         SELECT
             unit.age AS age,
             working_class.working_class AS workclass,
@@ -60,6 +60,7 @@ def db_create(engine: Engine):
 
         with Session(engine) as session:
             session.execute(text(sql_create_view))
+            session.commit()
 
     except Exception as e:
         logging.error(e)
