@@ -72,6 +72,7 @@ for launching the application and fulfilling all the infrastructure requirements
 ## Task 2: Data insights
 
 - ### Subtask: [Jupyter Notebook](docs/task_20.ipnb)
+  I added [Jupyter Notebook as PDF](docs/task_20.pdf) because sometimes my local instance of Jupyter Notebook does not display it correctly. 
 - ### Subtask: [JSON with questions and answers](docs/task_24.json)
 
 ## Task 3: Web Application
