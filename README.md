@@ -22,6 +22,8 @@ for launching the application and fulfilling all the infrastructure requirements
 
 - ### Preparation for the next two steps
 
+  The project was developed using **Python** version `3.10.12` and additionally tested in version `3.12.0`
+
   For the next two steps, performed on your local Linux PC, create a
   virtual environment, activate it, and pre-install all packages listed in the `requirements.txt` file.
   
