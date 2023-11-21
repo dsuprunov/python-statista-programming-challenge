@@ -193,3 +193,11 @@ Commands:
 -  **test**    - Tests the connection to the production database and uploads scripts
 
 ## Bonus task
+
+The bonus task, unfortunately, was not completed because I decided to invest my time
+in completing all the primary tasks, bringing the code into compliance with PEP8 standards
+(with a few exceptions, such as docstrings), formatting the documentation to a more
+readable state, and releasing a new version. Additionally, time was spent searching
+for a more optimal way to import a CSV file into the database. Two additional solutions
+were found (caching and bulk upload directly through the database), the implementation
+of which was beyond the scope of this assignment.
