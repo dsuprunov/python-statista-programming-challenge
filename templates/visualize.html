@@ -6,6 +6,7 @@
         <select id="xAxis" class="form-control">
             <!-- X Axis options will be added dynamically using JavaScript -->
         </select>
+        <small class="form-text text-muted">GROUPBY will be applied to the selected X Axis.</small>
     </div>
 
     <div class="form-group">
@@ -13,14 +14,76 @@
         <select id="yAxis" class="form-control">
             <!-- Y Axis options will be added dynamically using JavaScript -->
         </select>
+        <small class="form-text text-muted">COUNT will be applied to the selected Y Axis.</small>
     </div>
 
     <button type="button" class="btn btn-primary" onclick="visualizeData()">Visualize</button>
 </form>
 
+<div class="container mt-4">
+    <div id="plot-container"></div>
+</div>
+
 <script>
+    function populateAxisOptions() {
+        var selectedColumns = [];
 
+        $('#columnCheckboxes input:checked').each(function () {
+            selectedColumns.push($(this).attr('id').replace('Checkbox', ''));
+        });
+
+        var xAxisSelect = $('#xAxis');
+        var yAxisSelect = $('#yAxis');
+
+        xAxisSelect.empty();
+        yAxisSelect.empty();
+
+        selectedColumns.forEach(function (column) {
+            xAxisSelect.append($('<option></option>').attr('value', column).text(column));
+            yAxisSelect.append($('<option></option>').attr('value', column).text(column));
+        });
+    }
+
+    function visualizeData() {
+        var selectedTable = $('#tableDropdown').val();
+        var xAxisField = $('#xAxis').val();
+        var yAxisField = $('#yAxis').val();
+
+        if (!xAxisField || !yAxisField) {
+            alert('Please select both X and Y axes.');
+            return;
+        }
+
+        if (xAxisField == yAxisField) {
+            alert('Please select different X and Y axes.');
+            return;
+        }
+
+        var requestData = {
+            table: selectedTable,
+            xAxis: xAxisField,
+            yAxis: yAxisField,
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/visualize',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success: function (data) {
+                var img = document.createElement('img');
+                img.src = 'data:image/png;base64,' + data.image_base64;
+
+                document.getElementById('plot-container').appendChild(img);
+            },
+            error: function (error) {
+                console.error('Error exporting data:', error);
+            }
+        });
+
+    }
+
+    $('#visualize-tab').on('shown.bs.tab', function (e) {
+        populateAxisOptions();
+    });
 </script>
-
-
-

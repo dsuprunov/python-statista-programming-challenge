@@ -2,34 +2,20 @@
 
 from __future__ import annotations
 
-import logging
-from io import StringIO
 import os
-import sys
-from sqlalchemy.engine.url import make_url
+from io import StringIO
+from io import BytesIO
+import base64
+import logging
+from flask import Response
+from sqlalchemy import inspect
+import pandas as pd
+import matplotlib.pyplot as plt
 from flask import Flask
 from flask import request
 from flask import jsonify
-from flask import Response
-from sqlalchemy import create_engine, inspect, select
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import ForeignKey
-from icecream import ic
-import pandas as pd
-from flask import Flask, render_template, request, jsonify
-
-from flask import flash
-from flask import Flask
-from flask import redirect
 from flask import render_template
-from flask import request
-from flask import url_for
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped, mapped_column
 
 from core.models import Base
 
@@ -64,6 +50,7 @@ def table_get(table_name):
         if table_name == 'unit':
             table_name = 'view_census_data_as_csv'
         df = pd.read_sql_table(table_name, db.session.connection(), index_col=['id'])
+        df = df.head(100)
 
         return jsonify(df.to_dict(orient='records'))
     except Exception as e:
@@ -95,6 +82,46 @@ def data_get():
         response.headers['Content-Disposition'] = f'attachment; filename={table_name}_export.csv'
 
         return response
+    except Exception as e:
+        logging.error(e)
+        return jsonify(error=str(e)), 500
+
+
+@app.route('/visualize', methods=['POST'])
+def visualize_get():
+    try:
+        js_data = request.get_json()
+        table_name = js_data['table']
+        xAxis = js_data['xAxis']
+        yAxis = js_data['yAxis']
+
+        #
+        # for 'the' main dataset instead of complicated
+        # SQL query we will use view that was created before
+        #
+        if table_name == 'unit':
+            table_name = 'view_census_data_as_csv'
+        df = pd.read_sql_table(table_name, db.session.connection(), index_col=['id'])
+
+        df = df.groupby([xAxis, yAxis]).size().reset_index(name='count')
+
+        df = df.pivot(index=xAxis, columns=yAxis, values='count').fillna(0)
+        ax = df.plot(kind='bar', stacked=True)
+        # for container in ax.containers:
+        #     ax.bar_label(container, fmt='%d', label_type='edge')
+
+        plt.xlabel(f'{xAxis}')
+        plt.ylabel('Count of occurrences')
+        plt.title(f'Count of occurrences for each combination of `{xAxis}` and `{yAxis}` values')
+
+        image_stream = BytesIO()
+        plt.savefig(image_stream, format='png')
+        image_stream.seek(0)
+        plt.close()
+
+        image_base64 = base64.b64encode(image_stream.read()).decode('utf-8')
+
+        return jsonify({'image_base64': image_base64})
     except Exception as e:
         logging.error(e)
         return jsonify(error=str(e)), 500
