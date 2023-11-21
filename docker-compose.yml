@@ -18,8 +18,8 @@ services:
     depends_on:
       - postgres
     restart: always
-#    ports:
-#      - "8181:8181"
+    ports:
+      - "8181:8181"
 #    volumes:
 #      - ./data/:/app/data
     build: ./

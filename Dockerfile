@@ -15,4 +15,4 @@ RUN coverage report
 
 EXPOSE 8181
 
-CMD ["python", "main.py"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8181", "wsgi:app"]
