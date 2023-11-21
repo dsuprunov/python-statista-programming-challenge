@@ -67,6 +67,28 @@
         });
     }
 
+    function populateAxisOptions() {
+        var selectedColumns = [];
+
+        $('#columnCheckboxes input:checked').each(function () {
+            selectedColumns.push($(this).attr('id').replace('Checkbox', ''));
+        });
+
+        console.log('populateAxisOptions', selectedColumns)
+
+        var xAxisSelect = $('#xAxis');
+        var yAxisSelect = $('#yAxis');
+
+        xAxisSelect.empty();
+        yAxisSelect.empty();
+
+        selectedColumns.forEach(function (column) {
+            xAxisSelect.append($('<option></option>').attr('value', column).text(column));
+            yAxisSelect.append($('<option></option>').attr('value', column).text(column));
+        });
+
+    }
+
     function toggleColumn(column) {
         var columnIndex = $('#tableHeaders th:contains(' + column + ')').index();
 
@@ -74,15 +96,23 @@
             // Show the column
             $('#tableHeaders th:eq(' + columnIndex + ')').show();
             $('#tableBody td[data-column="' + column + '"]').show();
+
+            populateAxisOptions();
         } else {
             // Hide the column
             $('#tableHeaders th:eq(' + columnIndex + ')').hide();
             $('#tableBody td[data-column="' + column + '"]').hide();
+
+            populateAxisOptions();
         }
     }
 
     $(document).ready(function() {
         loadTableData();
+    });
+
+    $('#visualize-tab').on('shown.bs.tab', function (e) {
+        populateAxisOptions();
     });
 </script>
 

@@ -13,9 +13,6 @@
             selectedColumns.push($(this).attr('id').replace('Checkbox', ''));
         });
 
-        console.log('selectedTable', selectedTable)
-        console.log('selectedColumns', selectedColumns)
-
         var requestData = {
             table: selectedTable,
             fields: selectedColumns
