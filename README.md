@@ -3,12 +3,6 @@
 [![tests](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/tests.yml/badge.svg)](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/tests.yml)
 [![docker build](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/docker.yml/badge.svg)](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/docker.yml)
 
-
-## ToDo
-
-- Bonus task
-- Task #3
-
 ## Table of Contents
 
 - [Task 1: Ingesting the data into a database](#task-1-ingesting-the-data-into-a-database)
