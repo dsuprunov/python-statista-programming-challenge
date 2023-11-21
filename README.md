@@ -3,12 +3,6 @@
 [![tests](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/tests.yml/badge.svg)](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/tests.yml)
 [![docker build](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/docker.yml/badge.svg)](https://github.com/dsuprunov/python-statista-programming-challenge/actions/workflows/docker.yml)
 
-
-## ToDo
-
-- Bonus task
-- Task #3
-
 ## Table of Contents
 
 - [Task 1: Ingesting the data into a database](#task-1-ingesting-the-data-into-a-database)
@@ -27,6 +21,8 @@ for launching the application and fulfilling all the infrastructure requirements
 ## Task 1: Ingesting the data into a database
 
 - ### Preparation for the next two steps
+
+  The project was developed using **Python** version `3.10.12` and additionally tested in version `3.12.0`
 
   For the next two steps, performed on your local Linux PC, create a
   virtual environment, activate it, and pre-install all packages listed in the `requirements.txt` file.
