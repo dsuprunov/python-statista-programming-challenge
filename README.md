@@ -90,7 +90,12 @@ for launching the application and fulfilling all the infrastructure requirements
   - The application will be accessible at `http://-YOUR-DOCKER-PC-ADDRESS-OR-NAME-:8181`
 
 - ### You can find 'all data', dynamically joined into one table (in a format similar to the original CSV), in the `unit` table.
-  Please be patient while waiting for this data to load, as it contains ~50,000 records. 
+  
+- ### For graphical visualizations, I discovered several appealing charts related to the 'unit' table.
+  - Age vs Workclass
+  - Gender vs Workclass
+  - Age vs Income
+  - etc
 
 
 ## Task 4: Making our app distribution ready
