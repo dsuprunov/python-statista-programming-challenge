@@ -72,10 +72,26 @@ for launching the application and fulfilling all the infrastructure requirements
 ## Task 2: Data insights
 
 - ### Subtask: [Jupyter Notebook](docs/task_20.ipnb)
-  I added [Jupyter Notebook as PDF](docs/task_20.pdf) because sometimes my local instance of Jupyter Notebook does not display it correctly. 
+  I added [Jupyter Notebook as PDF](docs/task_20.pdf) because sometimes my local instance of Jupyter Notebook does
+  not display it correctly. 
 - ### Subtask: [JSON with questions and answers](docs/task_24.json)
 
 ## Task 3: Web Application
+
+- ### at local Linux PC
+  Start the web application
+  ```bash
+  ./main.py
+  ```
+  The application will be accessible at [http://localhost:8181](http://localhost:8181)
+
+- ### as dockerized service
+  - Make sure to complete all the steps outlined in [Task 5: Updating, testing, and documenting](#task-5-updating-testing-and-documenting)
+  - The application will be accessible at `http://-YOUR-DOCKER-PC-ADDRESS-OR-NAME-:8181`
+
+- ### You can find 'all data', dynamically joined into one table (in a format similar to the original CSV), in the `unit` table.
+  Please be patient while waiting for this data to load, as it contains ~50,000 records. 
+
 
 ## Task 4: Making our app distribution ready
 

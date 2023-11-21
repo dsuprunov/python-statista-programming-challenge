@@ -1,7 +1,12 @@
+#!/usr/bin/env python
+
 from __future__ import annotations
 
 import logging
 
+import os
+import sys
+from sqlalchemy.engine.url import make_url
 from sqlalchemy import create_engine, inspect, select
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -26,17 +31,13 @@ from core.models import Base
 
 import config
 
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///census.db.sqlite3'  # config.SQLALCHEMY_URL
+app = Flask(__name__, instance_path=os.getcwd())
+app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_URL
 
 db = SQLAlchemy(app, model_class=Base)
 
 with app.app_context():
     db.create_all()
-
-@app.route('/test')
-def test():
-    return render_template('test.html')
 
 
 @app.route('/')
@@ -52,6 +53,13 @@ def index():
 @app.route('/table/<string:table_name>', methods=['GET'])
 def table_get(table_name):
     try:
+        #
+        # for 'the' main dataset instead of complicated
+        # SQL query we will use view that was created before
+        #
+        if table_name == 'unit':
+            table_name = 'view_census_data_as_csv'
+
         df = pd.read_sql_table(table_name, db.session.connection(), index_col=['id'])
 
         return jsonify(df.to_dict(orient='records'))
@@ -61,4 +69,4 @@ def table_get(table_name):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8181)

@@ -1,14 +1,9 @@
 version: '3'
 
-networks:
-  statista-challenge-network:
-
 services:
   postgres:
     image: postgres:latest
     container_name: statista-challenge-postgres
-    networks:
-      - statista-challenge-network
     env_file:
       - .docker.env
     restart: always
@@ -18,15 +13,13 @@ services:
   app:
     image: statista-challenge-app:latest
     container_name: statista-challenge-app
-    networks:
-      - statista-challenge-network
     env_file:
       - .docker.env
     depends_on:
       - postgres
     restart: always
-    ports:
-      - "8080:8080"
+#    ports:
+#      - "8181:8181"
 #    volumes:
 #      - ./data/:/app/data
     build: ./

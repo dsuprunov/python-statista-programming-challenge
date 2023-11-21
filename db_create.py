@@ -17,6 +17,7 @@ def db_create(engine: Engine):
     sql_create_view = '''
         CREATE VIEW view_census_data_as_csv AS
         SELECT
+            unit.id AS id,
             unit.age AS age,
             working_class.working_class AS workclass,
             unit.final_weight AS fnlwgt,
