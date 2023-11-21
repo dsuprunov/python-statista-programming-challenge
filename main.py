@@ -3,10 +3,14 @@
 from __future__ import annotations
 
 import logging
-
+from io import StringIO
 import os
 import sys
 from sqlalchemy.engine.url import make_url
+from flask import Flask
+from flask import request
+from flask import jsonify
+from flask import Response
 from sqlalchemy import create_engine, inspect, select
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -59,13 +63,41 @@ def table_get(table_name):
         #
         if table_name == 'unit':
             table_name = 'view_census_data_as_csv'
-
         df = pd.read_sql_table(table_name, db.session.connection(), index_col=['id'])
 
         return jsonify(df.to_dict(orient='records'))
     except Exception as e:
         logging.error(e)
         return jsonify(pd.DataFrame({}).to_dict(orient='records'))
+
+
+@app.route('/data', methods=['POST'])
+def data_get():
+    try:
+        js_data = request.get_json()
+        table_name = js_data['table']
+        fields = js_data['fields']
+
+        #
+        # for 'the' main dataset instead of complicated
+        # SQL query we will use view that was created before
+        #
+        if table_name == 'unit':
+            table_name = 'view_census_data_as_csv'
+        df = pd.read_sql_table(table_name, db.session.connection(), index_col=['id'])
+        df = df.drop(columns=set(df.columns) - set(fields))
+
+        csv_data = StringIO()
+
+        df.to_csv(csv_data, index=False)
+
+        response = Response(csv_data.getvalue(), content_type='text/csv')
+        response.headers['Content-Disposition'] = f'attachment; filename={table_name}_export.csv'
+
+        return response
+    except Exception as e:
+        logging.error(e)
+        return jsonify(error=str(e)), 500
 
 
 if __name__ == '__main__':

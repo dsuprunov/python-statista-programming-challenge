@@ -1,3 +1,48 @@
 <h2>Export Data</h2>
 
-Nothing here yet :(
+<div class="container mt-5">
+    <button class="btn btn-primary" id="exportBtn">Export</button>
+</div>
+
+<script>
+    function exportData() {
+        var selectedTable = $('#tableDropdown').val();
+        var selectedColumns = [];
+
+        $('#columnCheckboxes input:checked').each(function () {
+            selectedColumns.push($(this).attr('id').replace('Checkbox', ''));
+        });
+
+        console.log('selectedTable', selectedTable)
+        console.log('selectedColumns', selectedColumns)
+
+        var requestData = {
+            table: selectedTable,
+            fields: selectedColumns
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/data',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success: function (csvData) {
+                var blob = new Blob([csvData], { type: 'text/csv' });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = selectedTable + '_export.csv';
+                link.click();
+            },
+            error: function (error) {
+                console.error('Error exporting data:', error);
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        $('#exportBtn').click(function () {
+            exportData();
+        });
+    });
+</script>
